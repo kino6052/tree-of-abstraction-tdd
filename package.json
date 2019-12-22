@@ -5,9 +5,11 @@
   "main": "index.html",
   "scripts": {
     "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "test": "jest"
   },
   "dependencies": {
+    "@types/jest": "^24.0.24",
     "@types/lodash.uniqueid": "4.0.6",
     "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
@@ -20,6 +22,7 @@
     "uniqueid": "1.0.0"
   },
   "devDependencies": {
+    "jest": "^24.9.0",
     "parcel-bundler": "1.9.7",
     "typescript": "^3.7.4"
   },
