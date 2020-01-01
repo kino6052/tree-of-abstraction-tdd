@@ -23,6 +23,7 @@ describe('...', () => {
     ).toEqual(['Title', 'Title'])
   })
   it('should update an item', () => {
+    expect(getTitles(updateItem(item, newItem, items))).toEqual([newItem.title])
     expect.hasAssertions()
   })
   it('should delete an item', () => {
