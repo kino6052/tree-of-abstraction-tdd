@@ -94,4 +94,11 @@ describe('...', () => {
     ])
     expect.hasAssertions()
   })
+  it('should switch places of items', () => {
+    expect(getIds(switchPlaces(items[0].id, items[1].id, items))).toEqual([
+      items[1].id,
+      items[2].id,
+    ])
+    expect.hasAssertions()
+  })
 })
