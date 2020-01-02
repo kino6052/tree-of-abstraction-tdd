@@ -57,4 +57,11 @@ describe('...', () => {
     expect(getTitles(deleteItem(items[0].id, items))).toEqual([])
     expect.hasAssertions()
   })
+  it('should be able to assign parent to item', () => {
+    expect(getParentIds(setParent(items[0], items[1]))).toEqual([
+      items[1].id,
+      '',
+    ])
+    expect.hasAssertions()
+  })
 })
