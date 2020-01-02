@@ -95,9 +95,26 @@ describe('...', () => {
     expect.hasAssertions()
   })
   it('should switch places of items', () => {
-    expect(getIds(switchPlaces(items[0].id, items[1].id, items))).toEqual([
+    const switchPlaces = (
+      first: ItemWithId,
+      second: ItemWithId,
+      items: ItemWithId[]
+    ) =>
+      items.map(i => {
+        if (i.id === first.id) {
+          return second
+        } else if (i.id === second.id) {
+          return first
+        }
+      }) as ItemWithId[]
+    const items: ItemWithId[] = [
+      { id: '1', title: '1' },
+      { id: '2', title: '2' },
+    ]
+    const getIds = (items: ItemWithId[]) => items.map(i => i.id)
+    expect(getIds(switchPlaces(items[0], items[1], items))).toEqual([
       items[1].id,
-      items[2].id,
+      items[0].id,
     ])
     expect.hasAssertions()
   })
