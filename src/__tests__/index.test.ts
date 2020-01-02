@@ -6,6 +6,10 @@ interface ItemWithId extends Item {
   id: string
 }
 
+interface HierarchicalItem extends ItemWithId {
+  parentId: string
+}
+
 class ItemService {
   static addItem = (item: Item, items: Item[]) => [...items, item]
   static deleteItem = (id: string, items: ItemWithId[]) =>
@@ -58,7 +62,32 @@ describe('...', () => {
     expect.hasAssertions()
   })
   it('should be able to assign parent to item', () => {
-    expect(getParentIds(setParent(items[0], items[1]))).toEqual([
+    const setParent = (
+      to: HierarchicalItem,
+      from: HierarchicalItem,
+      items: HierarchicalItem[]
+    ) =>
+      items.map(i => {
+        if (i.id === to.id) {
+          i.parentId = from.id
+        }
+        return i
+      })
+    const items: HierarchicalItem[] = [
+      {
+        id: '1',
+        parentId: '',
+        title: '1',
+      },
+      {
+        id: '2',
+        parentId: '',
+        title: '2',
+      },
+    ]
+    const getParentIds = (items: HierarchicalItem[]) =>
+      items.map(i => i.parentId)
+    expect(getParentIds(setParent(items[0], items[1], items))).toEqual([
       items[1].id,
       '',
     ])
