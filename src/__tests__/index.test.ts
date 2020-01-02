@@ -17,6 +17,8 @@ class ItemService {
   static updateItem = (item: Item, newItem: Item, items: Item[]) =>
     items.map(i => (i === item ? newItem : i))
   static getTitles = (items: Item[]) => items.map(i => i.title)
+  static getParentIds = (items: HierarchicalItem[]) =>
+    items.map(i => i.parentId)
 }
 
 describe('...', () => {
@@ -85,8 +87,7 @@ describe('...', () => {
         title: '2',
       },
     ]
-    const getParentIds = (items: HierarchicalItem[]) =>
-      items.map(i => i.parentId)
+    const getParentIds = ItemService.getParentIds
     expect(getParentIds(setParent(items[0], items[1], items))).toEqual([
       items[1].id,
       '',
