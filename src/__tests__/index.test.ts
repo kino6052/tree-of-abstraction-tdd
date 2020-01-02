@@ -38,6 +38,8 @@ describe('...', () => {
     expect.hasAssertions()
   })
   it('should delete an item', () => {
+    expect(getTitles(items)).toEqual(['Title'])
+    expect(getTitles(deleteItem(items[0].id, items))).toEqual([])
     expect.hasAssertions()
   })
 })
