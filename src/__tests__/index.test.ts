@@ -23,7 +23,18 @@ describe('...', () => {
     ).toEqual(['Title', 'Title'])
   })
   it('should update an item', () => {
-    expect(getTitles(updateItem(item, newItem, items))).toEqual([newItem.title])
+    const item: Item = {
+      title: 'One',
+    }
+    const newItem: Item = {
+      title: 'Two',
+    }
+    const items = [item]
+    const updateItem = (item: Item, newItem: Item, items: Item[]) =>
+      items.map(i => (i === item ? newItem : i))
+    expect(ItemService.getTitles(updateItem(item, newItem, items))).toEqual([
+      newItem.title,
+    ])
     expect.hasAssertions()
   })
   it('should delete an item', () => {
