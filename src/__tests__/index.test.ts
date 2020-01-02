@@ -8,6 +8,10 @@ interface ItemWithId extends Item {
 
 class ItemService {
   static addItem = (item: Item, items: Item[]) => [...items, item]
+  static deleteItem = (id: string, items: ItemWithId[]) =>
+    items.filter(i => i.id !== id)
+  static updateItem = (item: Item, newItem: Item, items: Item[]) =>
+    items.map(i => (i === item ? newItem : i))
   static getTitles = (items: Item[]) => items.map(i => i.title)
 }
 
@@ -34,17 +38,15 @@ describe('...', () => {
       title: 'Two',
     }
     const items = [item]
-    const updateItem = (item: Item, newItem: Item, items: Item[]) =>
-      items.map(i => (i === item ? newItem : i))
+    const updateItem = ItemService.updateItem
     expect(ItemService.getTitles(updateItem(item, newItem, items))).toEqual([
       newItem.title,
     ])
     expect.hasAssertions()
   })
   it('should delete an item', () => {
-    const deleteItem = (id: string, items: ItemWithId[]) =>
-      items.filter(i => i.id !== id)
     const getTitles = (items: Item[]) => ItemService.getTitles(items)
+    const deleteItem = ItemService.deleteItem
     const items: ItemWithId[] = [
       {
         id: '1',
