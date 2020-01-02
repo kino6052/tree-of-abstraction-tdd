@@ -19,6 +19,30 @@ class ItemService {
   static getTitles = (items: Item[]) => items.map(i => i.title)
   static getParentIds = (items: HierarchicalItem[]) =>
     items.map(i => i.parentId)
+  static getIds = (items: ItemWithId[]) => items.map(i => i.id)
+  static setParent = (
+    to: HierarchicalItem,
+    from: HierarchicalItem,
+    items: HierarchicalItem[]
+  ) =>
+    items.map(i => {
+      if (i.id === to.id) {
+        i.parentId = from.id
+      }
+      return i
+    })
+  static switchPlaces = (
+    first: ItemWithId,
+    second: ItemWithId,
+    items: ItemWithId[]
+  ) =>
+    items.map(i => {
+      if (i.id === first.id) {
+        return second
+      } else if (i.id === second.id) {
+        return first
+      }
+    }) as ItemWithId[]
 }
 
 describe('...', () => {
@@ -64,17 +88,6 @@ describe('...', () => {
     expect.hasAssertions()
   })
   it('should be able to assign parent to item', () => {
-    const setParent = (
-      to: HierarchicalItem,
-      from: HierarchicalItem,
-      items: HierarchicalItem[]
-    ) =>
-      items.map(i => {
-        if (i.id === to.id) {
-          i.parentId = from.id
-        }
-        return i
-      })
     const items: HierarchicalItem[] = [
       {
         id: '1',
@@ -88,6 +101,7 @@ describe('...', () => {
       },
     ]
     const getParentIds = ItemService.getParentIds
+    const setParent = ItemService.setParent
     expect(getParentIds(setParent(items[0], items[1], items))).toEqual([
       items[1].id,
       '',
@@ -95,23 +109,12 @@ describe('...', () => {
     expect.hasAssertions()
   })
   it('should switch places of items', () => {
-    const switchPlaces = (
-      first: ItemWithId,
-      second: ItemWithId,
-      items: ItemWithId[]
-    ) =>
-      items.map(i => {
-        if (i.id === first.id) {
-          return second
-        } else if (i.id === second.id) {
-          return first
-        }
-      }) as ItemWithId[]
     const items: ItemWithId[] = [
       { id: '1', title: '1' },
       { id: '2', title: '2' },
     ]
-    const getIds = (items: ItemWithId[]) => items.map(i => i.id)
+    const getIds = ItemService.getIds
+    const switchPlaces = ItemService.switchPlaces
     expect(getIds(switchPlaces(items[0], items[1], items))).toEqual([
       items[1].id,
       items[0].id,
