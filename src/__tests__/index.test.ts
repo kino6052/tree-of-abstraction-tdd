@@ -122,9 +122,12 @@ describe('...', () => {
     expect.hasAssertions()
   })
   it('should find items by title', () => {
+    const getTitles = ItemService.getTitles
+    const searchByTitle = (title: string, items: Item[]) =>
+      items.filter(i => i.title.toLowerCase().includes(title.toLowerCase()))
     expect(
       getTitles(
-        searchByTitle('test', [
+        searchByTitle('tEst', [
           { title: 'test 123' },
           { title: 'Tes' },
           { title: 'Test1' },
