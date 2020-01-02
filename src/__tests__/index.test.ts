@@ -121,4 +121,16 @@ describe('...', () => {
     ])
     expect.hasAssertions()
   })
+  it('should find items by title', () => {
+    expect(
+      getTitles(
+        searchByTitle('test', [
+          { title: 'test 123' },
+          { title: 'Tes' },
+          { title: 'Test1' },
+        ])
+      )
+    ).toEqual(['test 123', 'Test1'])
+    expect.hasAssertions()
+  })
 })
