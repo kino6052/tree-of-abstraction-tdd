@@ -43,6 +43,8 @@ class ItemService {
         return first
       }
     }) as ItemWithId[]
+  static searchByTitle = (title: string, items: Item[]) =>
+    items.filter(i => i.title.toLowerCase().includes(title.toLowerCase()))
 }
 
 describe('...', () => {
@@ -123,8 +125,7 @@ describe('...', () => {
   })
   it('should find items by title', () => {
     const getTitles = ItemService.getTitles
-    const searchByTitle = (title: string, items: Item[]) =>
-      items.filter(i => i.title.toLowerCase().includes(title.toLowerCase()))
+    const searchByTitle = ItemService.searchByTitle
     expect(
       getTitles(
         searchByTitle('tEst', [
